@@ -1,0 +1,62 @@
+import React,{useState} from "react";
+import { Link } from "react-router-dom";
+import { FaSearch,FaBars,FaTimes } from "react-icons/fa";
+
+const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  return (
+    <header className="bg-slate-200 shadow-lg">
+      <div className="container flex justify-between items-center max-w-6xl mx-auto p-3">
+        {/* Logo */}
+        <Link to="/">
+        <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
+          <span className="text-slate-500">Jasiel</span>
+          <span className="text-slate-700">Estate</span>
+        </h1>
+        </Link>
+        {/* search */}
+        <form className="flex items-center rounded-lg bg-slate-100 p-2">
+          <input
+            type="text"
+            placeholder="Search..."
+            className="bg-transparent focus:outline-none w-24 sm:w-64"
+          />
+          <FaSearch className="text-slate-600"/>
+        </form>
+        {/* Desktop Menu */}
+        <ul className="flex gap-4">
+          <Link to="/">
+          <li className="hidden sm:inline text-slate-700 hover:font-bold">Home</li></Link>
+          <Link to="/about">
+          <li className="hidden sm:inline text-slate-700 hover:font-bold">About</li></Link>
+          <Link to="/Sign-in">
+          <li className="hidden sm:inline text-slate-700 hover:font-bold">Sign in</li>
+          </Link>  
+        </ul>
+        {/* Mobile Menu Button */}
+         <button
+          className="sm:hidden text-slate-700 text-2xl"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? <FaTimes /> : <FaBars />}
+        </button>
+        {/* Mobile Dropdown */}
+      {isMenuOpen && (
+        <ul className="sm:hidden flex flex-col items-center py-4 gap-4 shadow-md">
+          <Link to="/">
+          <li className="cursor-pointer">Home</li>
+          </Link>
+          <Link to="/about">
+          <li className="cursor-pointer">About</li>
+          </Link>
+          <Link to="/Sign-in">
+          <li className="cursor-pointer">Sign in</li>
+          </Link>
+        </ul>
+      )}
+      </div>
+    </header>
+  );
+};
+
+export default Header;
