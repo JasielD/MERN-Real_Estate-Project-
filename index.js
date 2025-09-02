@@ -1,6 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import UserRouter from './Routes/user.route.js';
+import AuthRouter from './Routes/auth.route.js';
 
 dotenv.config();
 
@@ -11,12 +13,22 @@ mongoose.connect(process.env.MONGO_URL).then(()=>{
 })
 
 const app = express();
+app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
+app.use("/api/user",UserRouter);
+app.use("/api/auth",AuthRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+app.use((err,req,res,next)=>{
+  const statusCode = err.status || 500;
+  const message = err.message || "Something went wrong";
+  res.status(statusCode).json({
+    success:false,
+    status:statusCode,
+    message:message,
+  });
+})
