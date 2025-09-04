@@ -1,5 +1,4 @@
 import axios from "axios";
-import { set } from "mongoose";
 import React,{useState} from "react";
 import { Link,useNavigate } from "react-router-dom";
 
@@ -64,8 +63,7 @@ const Sign_Up = () => {
         <button disabled={loading} type="submit" className="bg-gray-700 text-white p-3 rounded-lg hover:opacity-90 transition uppercase disabled:opacity-50">
           {loading ? "Loading..." : "Sign Up"}
         </button>
-      </form>
-      <div className="flex justify-center gap-2 mt-5 text-sm">
+      <div className="flex gap-2 mt-2 text-sm">
         <p className="text-gray-600">have an account?</p>
         <Link to={"sign-in"}>
           <span className="text-blue-600 hover:underline font-medium">
@@ -73,7 +71,8 @@ const Sign_Up = () => {
           </span>
         </Link>
       </div>
-      {error && <p className="text-red-600 mt-5">{error}</p>}
+      {error && <p className="text-red-600 mt-2">{error}</p>}
+      </form>
     </div>
   );
 };
