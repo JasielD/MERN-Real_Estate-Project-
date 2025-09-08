@@ -1,9 +1,12 @@
 import React,{useState} from "react";
 import { Link } from "react-router-dom";
 import { FaSearch,FaBars,FaTimes } from "react-icons/fa";
+import {useSelector} from 'react-redux'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const {user} = useSelector((state) => state.user)
+  console.log(user);
   return (
     <header className="bg-slate-200 shadow-lg">
       <div className="container flex justify-between items-center max-w-6xl mx-auto p-3">
@@ -29,8 +32,12 @@ const Header = () => {
           <li className="hidden sm:inline text-slate-700 hover:font-bold">Home</li></Link>
           <Link to="/about">
           <li className="hidden sm:inline text-slate-700 hover:font-bold">About</li></Link>
-          <Link to="/Sign-in">
+          <Link to="/profile">
+          {user?(
+            <img className="rounded-full h-8 w-8 object-cover border-black hover:border-2" src={user.avatar} alt="profile"/>
+          ):(
           <li className="hidden sm:inline text-slate-700 hover:font-bold">Sign in</li>
+          )}
           </Link>  
         </ul>
         {/* Mobile Menu Button */}
@@ -50,7 +57,7 @@ const Header = () => {
           <li className="cursor-pointer">About</li>
           </Link>
           <Link to="/Sign-in">
-          <li className="cursor-pointer">Sign in</li>
+             <li className="cursor-pointer">Sign in</li>
           </Link>
         </ul>
       )}

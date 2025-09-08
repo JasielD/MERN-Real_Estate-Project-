@@ -41,8 +41,9 @@ export const signinController = async (req,res,next) => {
 export const googleController = async (req, res, next) => {
     
     try {
-        const validUser = await User.find({email:req.body.email});
-        if(email){
+        const validUser = await User.findOne({email:req.body.email});
+        //if user already exists
+        if(validUser){
             const token = jwt.sign({id:validUser._id},process.env.JWT_SECRET);
             const {password:_, ...otherdetails} = validUser._doc;
             res
@@ -50,6 +51,7 @@ export const googleController = async (req, res, next) => {
             .status(200)
             .json(otherdetails)
         }else{
+            //if user does not exist, create new user
             const generatedPassword = Math.random().toString(36).slice(-8);
             const hashedPassword = bcrypt.hashSync(generatedPassword, 10);
             const newUser = new User({
