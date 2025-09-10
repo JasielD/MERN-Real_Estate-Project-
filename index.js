@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import UserRouter from './Routes/user.route.js';
 import AuthRouter from './Routes/auth.route.js';
 import cors from 'cors';
+import path from 'path';
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use("/api/user",UserRouter);
 app.use("/api/auth",AuthRouter);
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

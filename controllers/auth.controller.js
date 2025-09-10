@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { errorHandler } from "../utils/error.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import cloudinary from "../config/cloudinary.js";
 dotenv.config();
 
 export const signupController = async (req,res,next) => {
@@ -68,6 +69,30 @@ export const googleController = async (req, res, next) => {
             .status(200)
             .json(otherdetails)
         }
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const handleUploadedImage = async (req, res, next) => {
+    try {
+        const { userId } = req.body;
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: "No file uploaded" });
+    }
+    
+
+    //  const avatarUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+    const avatarUrl = req.file.path; // Cloudinary URL
+
+    // update user in DB
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { avatar: avatarUrl },
+      { new: true } // return updated user
+    );
+
+    res.json({ success: true, avatarUrl: user.avatar });
     } catch (err) {
         next(err);
     }
