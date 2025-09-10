@@ -22,6 +22,8 @@ const userSchema = new mongoose.Schema({
     
 },{timestamps:true})
 
-const User = mongoose.model("User",userSchema);
+// const User = mongoose.model("User",userSchema);
+// Prevent OverwriteModelError by reusing an existing model if already compiled
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 export default User;
