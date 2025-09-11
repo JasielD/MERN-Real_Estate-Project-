@@ -6,7 +6,6 @@ import {useSelector} from 'react-redux'
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const {user} = useSelector((state) => state.user)
-  console.log(user);
   return (
     <header className="bg-slate-200 shadow-lg">
       <div className="container flex justify-between items-center max-w-6xl mx-auto p-3">
