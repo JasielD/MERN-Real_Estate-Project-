@@ -60,7 +60,7 @@ const Sign_In = () => {
         <OAuth />
       <div className="flex gap-2 mt-2 text-sm">
         <p className="text-gray-600">Don't have an account?</p>
-        <Link to={"sign-up"}>
+        <Link navigate to="/sign-up">
           <span className="text-blue-600 hover:underline font-medium">
             Sign Up
           </span>

@@ -1,6 +1,6 @@
 import React, { useRef,useState } from "react";
 import { useSelector,useDispatch } from "react-redux";
-import { updateAvatar,updateUserFailure,updateUserStart,updateUserSuccess } from "../redux/user/userSlice.js"; 
+import { updateAvatar,updateUserFailure,updateUserStart,updateUserSuccess,deleteUserFailure,deleteUserStart,deleteUserSuccess } from "../redux/user/userSlice.js"; 
 import axios from "axios"; 
 
 const Profile = () => {
@@ -38,7 +38,7 @@ const Profile = () => {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const res = await axios.post(`/api/user/update/${user._id}`, formData,{
+      const res = await axios.put(`/api/user/update/${user._id}`, formData,{
          withCredentials: true,  // send cookies
       });
       console.log(res);
@@ -51,6 +51,22 @@ const Profile = () => {
       }
     } catch (err) {
       dispatch(updateUserFailure(err.response.data.message));
+    }
+  }
+
+  const handleDeleteUser = async()=>{
+    try {
+      dispatch(deleteUserStart());
+      const res = await axios.delete(`/api/user/delete/${user._id}`,{
+         withCredentials: true,  // send cookies
+      });
+      if (res.data.success === false) {
+        dispatch(deleteUserFailure(res.data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(res.data));
+    } catch (err) {
+      dispatch(deleteUserFailure(err.response.data.message));
     }
   }
   return (
@@ -113,7 +129,7 @@ const Profile = () => {
         </button>
       </form>
       <div className="flex justify-between mt-4">
-        <span className="text-red-600 cursor-pointer">Delete account</span>
+        <span onClick={handleDeleteUser} className="text-red-600 cursor-pointer">Delete account</span>
         <span className="text-red-600 cursor-pointer">Sign out</span>
       </div>
       <p className="text-red-700">{error?error:""}</p>
@@ -122,4 +138,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Profile; 
