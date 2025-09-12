@@ -6,6 +6,7 @@ import AuthRouter from './Routes/auth.route.js';
 import cors from 'cors';
 import path from 'path';
 import cookieParser from 'cookie-parser';
+import ListingRouter from './Routes/Listing.route.js';
 
 dotenv.config();
 
@@ -21,12 +22,14 @@ app.use(cors({
   origin: "http://localhost:5173",
   credentials: true,
 }));
+
 app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
 app.use("/api/user",UserRouter);
 app.use("/api/auth",AuthRouter);
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+app.use("/api/listing",ListingRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

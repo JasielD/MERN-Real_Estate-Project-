@@ -1,7 +1,6 @@
 import express from 'express';
 import multer from "multer";
-import path from "path";
-import {googleController, signinController,signupController,handleUploadedImage } from '../controllers/auth.controller.js';
+import {googleController, signinController,signupController,handleUploadedImage,signOutController } from '../controllers/auth.controller.js';
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import cloudinary from "../config/cloudinary.js";
 
@@ -33,6 +32,7 @@ Router.post("/signup",signupController);
 Router.post("/signin",signinController);
 Router.post("/google",googleController);
 Router.post("/upload", upload.single("image"), handleUploadedImage);
+Router.get("/signout",signOutController);
 
 
 export default Router;  
