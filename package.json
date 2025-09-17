@@ -21,6 +21,7 @@
   "homepage": "https://github.com/JasielD/MERN-Real_Estate-Project-#readme",
   "description": "",
   "dependencies": {
+    "@supabase/supabase-js": "^2.57.4",
     "axios": "^1.11.0",
     "bcrypt": "^6.0.0",
     "cloudinary": "^1.41.3",
