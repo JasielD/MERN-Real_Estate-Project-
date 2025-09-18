@@ -13,7 +13,7 @@ import {
   signOutUserSuccess,
 } from "../redux/user/userSlice.js";
 import axios from "axios";
-import { Link ,useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 const Profile = () => {
   const { user, loading, error } = useSelector((state) => state.user);
@@ -21,7 +21,6 @@ const Profile = () => {
   const fileRef = useRef(null);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
-  const navigate = useNavigate();
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -164,7 +163,7 @@ const Profile = () => {
           {loading ? "Loading..." : "Update"}
         </button>
         <Link className="bg-green-700 text-white p-3 rounded-lg hover:opacity-90 transition uppercase disabled:opacity-50 text-center"
-        navigate to="/create-listing"
+        to="/create-listing"
         >
         Create Listing
         </Link>
