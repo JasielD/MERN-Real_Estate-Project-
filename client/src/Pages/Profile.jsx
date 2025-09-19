@@ -21,6 +21,8 @@ const Profile = () => {
   const fileRef = useRef(null);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [showListingError,setShowListingError] = useState(false);
+  const [userListings,setUserlistings]=useState([])
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -95,6 +97,21 @@ const Profile = () => {
       dispatch(signOutUserFailure(err.response.data.message));
     }
   };
+
+  const handleShowListing = async()=>{
+    try {
+      setShowListingError(false);
+      const res = await axios.get(`/api/user/listings/${user._id}`);
+      const data = res.data
+      if(data.success===false){
+        setShowListingError(true)
+        return
+      }
+      setUserlistings(data)
+    } catch (err) {
+      setShowListingError(err);
+    }
+  }
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-bold text-center my-7">Profile</h1>
@@ -183,6 +200,29 @@ const Profile = () => {
       <p className="text-green-700">
         {updateSuccess ? "User Updated Successsfully!!" : ""}
       </p>
+      <button onClick={handleShowListing} className="text-green-500 w-full cursor-pointer">
+        Show Listing
+      </button>
+      <p>{showListingError?"error showing listings":""}</p>
+      {userListings&&userListings.length>0&&  
+      <div>
+        <h1 className="font-bold text-center mt-7 text-2xl"> Your Listings </h1>
+        {userListings.map((listing)=>(
+          <div key={listing._id} className="flex justify-between shadow-lg p-3 rounded-lg gap-4">
+            <Link to={`/listing/${listing._id}`}>
+            <img className="h-16 w-16 object-contain rounded-lg" src={listing.imageUrls[0]} alt="listing cover" />
+            </Link>
+            <Link className="text-gray-800 font-bold hover:underline truncate flex-1" to={`/listing/${listing._id}`}>
+            <p>{listing.name}</p>
+            </Link>
+            <div className="flex flex-col items-center">
+             <button  className="text-red-700 uppercase">Delete</button> 
+             <button  className="text-green-700 uppercase">edit</button>
+            </div>
+          </div>
+        ))}
+      </div>
+      }
     </div>
   );
 };
