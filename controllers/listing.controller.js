@@ -1,3 +1,4 @@
+import { get } from "mongoose";
 import Listing from "../models/listing.model.js";
 import { errorHandler } from "../utils/error.js";
 
@@ -28,7 +29,6 @@ export const deleteListingController = async(req,res,next)=>{
 
 export const updateListingController = async(req,res,next)=>{
     const listing = await Listing.findById(req.params.id)
-    console.log(listing)
     if(!listing){
         return next(errorHandler(404,"Listing not found"))
     }
@@ -43,6 +43,18 @@ export const updateListingController = async(req,res,next)=>{
     )
        res.status(200).json(updatedListing)
         } catch (err) {
+        next(err)
+    }
+}
+
+export const getListingController = async(req,res,next)=>{
+    try {
+        const getListing = await Listing.findById(req.params.id)
+        if(!getListing){
+            next(errorHandler(404,"Listing not found"))
+        }
+        res.status(200).json(getListing)
+    } catch (err) {
         next(err)
     }
 }

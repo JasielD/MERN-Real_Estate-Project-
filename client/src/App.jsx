@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./Home";
+import Home from "./Pages/Home";
 import Sign_In from "./Pages/Sign_In";
 import About from "./Pages/About";
 import Profile from "./Pages/Profile";
@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import Sign_Up from "./Pages/Sign_Up"
 import PrivateRoute from "./components/privateRoute";
 import CreateListing from "./Pages/CreateListing";
+import UpdateListing from "./Pages/UpdateListing";
 
 const App = () => {
   return (
@@ -20,9 +21,8 @@ const App = () => {
         <Route path="/about" element={<About />}/>
         <Route element={<PrivateRoute />}>
         <Route path="/profile" element={<Profile />}/>
-        </Route>
-        <Route element={<PrivateRoute />}>
         <Route path="/create-listing" element={<CreateListing />}/>
+        <Route path="/update-listing/:id" element={<UpdateListing />}/>  
         </Route>
       </Routes>
     </BrowserRouter>
