@@ -91,7 +91,7 @@ const Listing = () => {
             <p className='text-2xl font-semibold'>
               {listing.name} - ${' '}
               {listing.offer
-                ? listing.discountedPrice
+                ? listing.discountedPrice 
                 : listing.regularPrice}
               {listing.type === 'rent' && ' / month'}
             </p>

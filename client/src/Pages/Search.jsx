@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import {useNavigate,useLocation} from "react-router-dom"
+import ListingCard from '../components/ListingCard'
 
 const Search = () => {
   const [sidebarData,setSidebarData]=useState({
@@ -146,8 +147,15 @@ const Search = () => {
           <button className='bg-gray-700 text-white p-3 rounded-lg hover:opacity-90 transition uppercase disabled:opacity-50'>Search</button>
         </form>
       </div>
-      <div className=''>
+      <div className='flex-1'>
         <h1 className='text-2xl font-semibold mt-3 p-3 border-b-2 border-gray-300'>Listing Results</h1>
+        <div className='p-7 flex flex-wrap gap-4'>
+          {!loading && listing.length === 0 &&(
+            <p className='text-xl text-gray-700'>No Listing Found...</p>
+          )}
+          {loading&&<p className='text-xl text-gray-700 text-center w-full'>Loading...</p>}
+          {!loading && listing && listing.map((listing)=> <ListingCard key={listing._id} listing={listing}/>)}
+        </div>
       </div>
     </div>
   )
