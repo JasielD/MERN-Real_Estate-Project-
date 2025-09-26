@@ -143,7 +143,9 @@ const CreateListing = () => {
         try {
             setLoading(true)
             setError(false)
-            const res = await axios.post('/api/listing/create',{...formData,userRef:user._id,})
+            const res = await axios.post('/api/listing/create',{...formData,userRef:user._id},
+                 { withCredentials: true }
+            )
             setLoading(false);
             const data = res.data
             if(data.sucess===false){

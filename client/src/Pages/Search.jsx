@@ -15,7 +15,7 @@ const Search = () => {
   })
   const [loading,setLoading]=useState(false)
   const [listing,setListing]=useState([])
-  console.log(listing)
+  const [showmore,setShowmore]=useState(false)
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -44,9 +44,15 @@ const Search = () => {
 
     const fetchListing = async()=>{
       setLoading(true);
+      setShowmore(false);
       const searchQuery = urlParams.toString()
       const res = await axios.get(`/api/listing/get?${searchQuery}`);
       const data = res.data;
+      if(data.length>8){
+        setShowmore(true)
+      }else{
+        setShowmore(false)
+      }
       setListing(data)
       setLoading(false)
     }
@@ -82,6 +88,20 @@ const Search = () => {
     urlParams.set("order",sidebarData.order)
     const searchQuery = urlParams.toString()
     navigate(`/search?${searchQuery}`)
+  }
+
+  const onShowmoreClick = async()=>{
+   const numberOfListings = listing.length
+   const startIndex = numberOfListings
+   const urlParams = new URLSearchParams(location.search)
+   urlParams.set("startIndex",startIndex);
+   const searchQuery = urlParams.toString()
+   const res = await axios.get(`/api/listing/get?${searchQuery}`)
+   const data = res.data
+   setListing([...listing,...data]);
+   if(data.length<9){
+    setShowmore(false);
+   }
   }
     return (
     <div className='flex flex-col md:flex-row'>
@@ -155,6 +175,12 @@ const Search = () => {
           )}
           {loading&&<p className='text-xl text-gray-700 text-center w-full'>Loading...</p>}
           {!loading && listing && listing.map((listing)=> <ListingCard key={listing._id} listing={listing}/>)}
+          {showmore&&(
+            <button onClick={onShowmoreClick}
+            className='text-green-600 hover:underline p-7 text-center w-full' >
+              Show more
+            </button>
+          )}
         </div>
       </div>
     </div>
