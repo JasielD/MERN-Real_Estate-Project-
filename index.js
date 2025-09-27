@@ -7,6 +7,7 @@ import cors from 'cors';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import ListingRouter from './Routes/Listing.route.js';
+import path from 'path';
 
 dotenv.config();
 
@@ -15,6 +16,8 @@ mongoose.connect(process.env.MONGO_URL).then(()=>{
 }).catch((err)=>{
   console.error("Error connecting to MongoDB:", err);
 })
+
+const __dirname = path.resolve();
 
 const app = express();
 app.use(cookieParser());
