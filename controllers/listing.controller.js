@@ -1,5 +1,5 @@
 
-import Listing from "../models/listing.model.js";
+import Listing from "../Models/listing.model.js";
 import { errorHandler } from "../utils/error.js";
 
 export const createListingController = async(req, res,next) => {
