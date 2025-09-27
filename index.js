@@ -6,7 +6,7 @@ import AuthRouter from './Routes/auth.route.js';
 import cors from 'cors';
 import path from 'path';
 import cookieParser from 'cookie-parser';
-import ListingRouter from './Routes/Listing.route.js';
+import ListingRouter from './Routes/listing.route.js';
 
 
 dotenv.config();
@@ -36,7 +36,7 @@ app.use("/api/listing",ListingRouter);
 
 app.use(express.static(path.join(__dirname,"/client/dist")))
 
-app.get("*",(req,res)=>{
+app.get("/*path",(req,res)=>{
   res.sendFile(path.join(__dirname,"/client/dist/index.html"))
 })
 
