@@ -25,7 +25,7 @@ const Header = () => {
     }
   },[location.search])
   return (
-    <header className="bg-slate-200 shadow-lg">
+    <header className="bg-slate-200 shadow-lg relative">
       <div className="container flex justify-between items-center max-w-6xl mx-auto p-3">
         {/* Logo */}
         <Link to="/">
@@ -69,15 +69,16 @@ const Header = () => {
         </button>
         {/* Mobile Dropdown */}
       {isMenuOpen && (
-        <ul className="sm:hidden flex flex-col items-center py-4 gap-4 shadow-md">
-          <Link to="/">
-          <li className="cursor-pointer">Home</li>
+        <ul className="sm:hidden flex flex-col items-center py-4 gap-4 shadow-md 
+                       absolute right-0 top-full bg-white z-10 w-40">
+          <Link to="/" onClick={() => setIsMenuOpen(false)}>
+          <li className="cursor-pointer font-bold text-gray-700">Home</li>
           </Link>
-          <Link to="/about">
-          <li className="cursor-pointer">About</li>
+          <Link to="/about" onClick={() => setIsMenuOpen(false)}>
+          <li className="cursor-pointer font-bold text-gray-700">About</li>
           </Link>
-          <Link to="/Sign-in">
-             <li className="cursor-pointer">Sign in</li>
+          <Link to="/Sign-in" onClick={() => setIsMenuOpen(false)}>
+             <li className="cursor-pointer font-bold text-gray-700">Sign in</li>
           </Link>
         </ul>
       )}
