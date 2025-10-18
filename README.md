@@ -19,9 +19,6 @@
 - [📁 Project Structure](#-project-structure)
 - [💻 Tech Stack](#-Tech-Stack)
 - [🚀 Getting Started](#-getting-started)
-  - [☑️ Prerequisites](#-prerequisites)
-  - [⚙️ Installation](#-installation)
-  - [🤖 Usage](#🤖-usage)
 - [🔰 Contributing](#-contributing)
 
 ---
